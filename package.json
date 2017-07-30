@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "node-spotify-api": "^1.0.6",
     "twitter": "^1.7.1"
   }
 }
