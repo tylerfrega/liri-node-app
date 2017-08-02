@@ -11,7 +11,10 @@ switch(command){
       break;
     case 'movie-this':
       searchOMDB();
-    break;
+      break;
+    case 'do-what-it-says':
+      readFile();
+
 
 
 }
@@ -52,8 +55,8 @@ function searchSpotify(){
 ----------------
 Artist: ${artist} 
 Song: ${songName} 
-Preview ${preview_url}  
-Album ${albumName}
+Preview: ${preview_url}  
+Album: ${albumName}
 ----------------
 `);
   } 
@@ -92,13 +95,25 @@ actors: ${actors}
 ---------------`);
            
         }
-        if(movieName === undefined){
-            movieName = 'Mr.Nobody';
-            console.log(title, year, imdbRating, country, language, plot, actors);
-
-        }
+        
     });
 }
 
+function readFile(){
+    var fs = require("fs");
+     
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+  if (error) {
+    return console.log(error);
+  }
+  var dataArr = data.split(", ");
+  
+  command = dataArr[0];
+  search = dataArr[1];
+  searchSpotify();
+
+});
+}
 
     
