@@ -24,7 +24,7 @@ function getTweets(){
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
         for(i=0; i<tweets.length; i++){
-        console.log(tweets[i].created_at, tweets[i].text);
+        console.log("\n" + tweets[i].created_at, tweets[i].text);
         }
   }else{
       console.log(error);
@@ -36,11 +36,10 @@ function getTweets(){
 function searchSpotify(){
     var Spotify = require('node-spotify-api');
     var client = new Spotify(keys.spotifyKeys);
-
+  
     client.search({ type: 'track', query: search }, function(err, data) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
-  }
+
+  if (err) {return console.log('Error occurred: ' + err);}
 
  for(i=0; i<data.tracks.items.length; i++){
 
@@ -49,7 +48,14 @@ function searchSpotify(){
     var preview_url = data.tracks.items[i].preview_url;
     var albumName = data.tracks.items[i].album.name
     
-    console.log(artist + ': ',songName + '\n','Preview: ' + preview_url +'\n', 'Album: ' + albumName +'\n');
+    console.log(`
+----------------
+Artist: ${artist} 
+Song: ${songName} 
+Preview ${preview_url}  
+Album ${albumName}
+----------------
+`);
   } 
   
 });
@@ -65,15 +71,26 @@ function searchOMDB(){
     request(queryUrl, function(error, response, body){
         var title = JSON.parse(body).Title;
         var year = JSON.parse(body).Year;
-        var imdbRating = JSON.parse(body).Ratings.imdbRating;
+        var imdbRating = JSON.parse(body).Ratings[0].Value;
         var country = JSON.parse(body).Country;
         var language = JSON.parse(body).Language;
         var plot = JSON.parse(body).Plot;
         var actors = JSON.parse(body).Actors;
         
         if(!error && response.statusCose === 200);{
-           // console.log(title, year, imdbRating, country, language, plot, actors);
-           console.log(title, "\n" + year, "\n" + imdbRating, "\n" + country,"\n" + language,"\n" + plot,"\n" + actors);
+           ///console.log(title, year, imdbRating, country, language, plot, actors);
+           console.log(
+
+`--------------
+title: ${title}
+year: ${year}
+imdb Rating: ${imdbRating} 
+country: ${country}
+language: ${language} 
+plot: ${plot} 
+actors: ${actors}
+---------------`);
+           
         }
         if(movieName === undefined){
             movieName = 'Mr.Nobody';
