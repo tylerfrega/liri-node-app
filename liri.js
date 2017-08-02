@@ -49,7 +49,7 @@ function searchSpotify(){
     var preview_url = data.tracks.items[i].preview_url;
     var albumName = data.tracks.items[i].album.name
     
-    console.log(artist, songName, preview_url, albumName);
+    console.log(artist + ': ',songName + '\n','Preview: ' + preview_url +'\n', 'Album: ' + albumName +'\n');
   } 
   
 });
@@ -61,7 +61,6 @@ function searchOMDB(){
     var movieName = search;
     var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
 
-   
 
     request(queryUrl, function(error, response, body){
         var title = JSON.parse(body).Title;
@@ -74,9 +73,14 @@ function searchOMDB(){
         
         if(!error && response.statusCose === 200);{
            // console.log(title, year, imdbRating, country, language, plot, actors);
-           console.log(title, year, imdbRating, country, language, plot, actors)
+           console.log(title, "\n" + year, "\n" + imdbRating, "\n" + country,"\n" + language,"\n" + plot,"\n" + actors);
         }
-    })
+        if(movieName === undefined){
+            movieName = 'Mr.Nobody';
+            console.log(title, year, imdbRating, country, language, plot, actors);
+
+        }
+    });
 }
 
 
