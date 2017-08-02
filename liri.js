@@ -8,15 +8,23 @@ switch(command){
     getTweets();
     break;
     case 'spotify-this-song':
+    if(search === undefined){
+        search = "The Sign";
+    }
     searchSpotify();
     break;
     case 'movie-this':
+    if(search === undefined){
+        search = "Mr. Nobody";
+    }
     searchOMDB();
     break;
     case 'do-what-it-says':
     readFile();
 
 }
+
+
 
 function getTweets(){
     var Twitter = require('twitter');
@@ -45,7 +53,7 @@ function searchSpotify(){
   if (err) {return console.log('Error occurred: ' + err);}
 
  for(i=0; i<data.tracks.items.length; i++){
-
+    
     var artist = data.tracks.items[i].artists[0].name;
     var songName = data.tracks.items[i].name;
     var preview_url = data.tracks.items[i].preview_url;
@@ -102,30 +110,29 @@ actors: ${actors}
 function readFile(){
     var fs = require("fs");
      
-    fs.readFile("random.txt", "utf8", function(error, data) {
+fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+        return console.log(error);
+    }
+    var dataArr = data.split(", ");
+    
+    command = dataArr[0];
+    search = dataArr[1];
 
-  if (error) {
-    return console.log(error);
-  }
-  var dataArr = data.split(", ");
-  
-  command = dataArr[0];
-  search = dataArr[1];
+    switch(command){
+        case 'my-tweets':
+        getTweets();
+        break;
+        case 'spotify-this-song':
+        searchSpotify();
+        break;
+        case 'movie-this':
+        searchOMDB();
+        break;
+        case 'do-what-it-says':
+        readFile();
 
-  switch(command){
-    case 'my-tweets':
-      getTweets();
-      break;
-    case 'spotify-this-song':
-      searchSpotify();
-      break;
-    case 'movie-this':
-      searchOMDB();
-      break;
-    case 'do-what-it-says':
-      readFile();
-
-}
+    }
   
 
 });
