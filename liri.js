@@ -2,20 +2,19 @@ var keys = require('./keys.js');
 var command = process.argv[2];
 var search = process.argv[3];
 
+
 switch(command){
     case 'my-tweets':
-      getTweets();
-      break;
+    getTweets();
+    break;
     case 'spotify-this-song':
-      searchSpotify();
-      break;
+    searchSpotify();
+    break;
     case 'movie-this':
-      searchOMDB();
-      break;
+    searchOMDB();
+    break;
     case 'do-what-it-says':
-      readFile();
-
-
+    readFile();
 
 }
 
@@ -28,6 +27,7 @@ function getTweets(){
     if (!error) {
         for(i=0; i<tweets.length; i++){
         console.log("\n" + tweets[i].created_at, tweets[i].text);
+      
         }
   }else{
       console.log(error);
@@ -111,7 +111,22 @@ function readFile(){
   
   command = dataArr[0];
   search = dataArr[1];
-  searchSpotify();
+
+  switch(command){
+    case 'my-tweets':
+      getTweets();
+      break;
+    case 'spotify-this-song':
+      searchSpotify();
+      break;
+    case 'movie-this':
+      searchOMDB();
+      break;
+    case 'do-what-it-says':
+      readFile();
+
+}
+  
 
 });
 }
